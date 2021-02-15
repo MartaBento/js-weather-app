@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 200vh;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+#container-top, #weekdays {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    text-align: center;
+}
+
+#container-top {
+    margin-top: 50px;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+
+#container-top > div, #weekdays > div {
+    margin: 10px;
+    width: 200px;
+    height: 100px;
+    border: 1px dashed black;
+}
+
+#container-bottom {
+    margin-top: 50px;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+
+#forecast-intro  {
+    text-align: left;
+    display: block;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+    #container-top, #weekdays {
+        flex-direction: column;
+        flex: 100%;
+    }
+  }
