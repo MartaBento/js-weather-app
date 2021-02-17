@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 body {
@@ -14,7 +14,8 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-#container-top, #weekdays {
+#container-top,
+#weekdays {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -24,43 +25,62 @@ body {
 }
 
 #container-top {
-    margin-top: 50px;
+    margin-top: 100px;
     margin-right: 200px;
     margin-left: 200px;
 }
 
-#container-top > div, #weekdays > div {
-    margin: 10px;
+#container-top>div,
+#weekdays>div {
+    margin: 0px;
     width: 200px;
-    height: 100px;
+    height: 200px;
 }
 
 #container-bottom {
     color: black;
     margin-top: 50px;
-    margin-right: 200px;
-    margin-left: 200px;
+    margin-right: 100px;
+    margin-left: 100px;
     border: 1px solid white;
     border-radius: 10px;
-    -webkit-box-shadow: 0px 3px 15px 5px rgba(0,0,0,0.27); 
-    box-shadow: 0px 3px 15px 5px rgba(0,0,0,0.27);
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.27);
     background-color: white;
 }
 
 #weekdays {
     color: black;
+    margin: 0px;
 }
 
-#forecast-intro  {
+#forecast-intro {
     margin: 20px;
     text-align: left;
     display: block;
 }
 
+#left-today-description,
+#right-real-temperature {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#left-today-description > h1 {
+    text-align: left;
+}
+
+#left-today-description > p {
+    text-align: left;
+}
+
 /* Responsive layout - makes a one column layout instead of a two-column layout */
 @media (max-width: 800px) {
-    #container-top, #weekdays {
+
+    #container-top,
+    #weekdays,
+    #container-bottom {
         flex-direction: column;
         flex: 100%;
     }
-  }
+}

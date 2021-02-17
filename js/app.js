@@ -10,6 +10,11 @@ let weatherRealTempQuerySelector = document.querySelector('#right-real-temperatu
 let feelsLikeTempQuerySelector = document.querySelector('#right-real-temperature > p')
 let dayOfWeekQuerySelector = document.querySelectorAll('#weekdays > div > h1')
 let tempForecastWeekQuerySelector = document.querySelectorAll('#weekdays > div > p')
+let iconForecastWeekQuerySelector = document.querySelectorAll('#icon')
+
+let days = [];
+let temp = [];
+let nrDaysToIterate = 7;
 
 getLocation();
 
@@ -39,17 +44,13 @@ function getLocation() {
                         dateDescriptionQuerySelector.textContent = moment().format('dddd' + ', ' + 'DD')
                         cityDescriptionQuerySelector.textContent = "Today in " + cityName + ", " + countryCode;
                         weatherDescriptionQuerySelector.textContent = data.data[0].weather.description;
-                        weatherRealTempQuerySelector.textContent = Math.floor(realTemp) + "ºC";
-                        feelsLikeTempQuerySelector.textContent = "Feels like " + Math.floor(feelsLike) + "ºC";
+                        weatherRealTempQuerySelector.textContent = Math.round(realTemp) + "ºC";
+                        feelsLikeTempQuerySelector.textContent = "Feels like " + Math.round(feelsLike) + "ºC";
 
-                        /* iterates through the next 7 days, using moment.js lib*/
-
-                        let days = [];
-                        let temp = [];
-                        let nrDaysToIterate = 7;
+                        /* iterates through the next 7 days, using moment.js lib */
 
                         for (let i = 1; i <= nrDaysToIterate; i++) {
-                            days.push(moment().add(i, 'days').format('ddd'));
+                            days.push(moment().add(i, 'days').format('dddd'));
                         }
 
                         for (let i = 0; i < days.length; i++) {
@@ -58,9 +59,9 @@ function getLocation() {
                             }
                         }
 
-                        /* iterates through the next 7 days to retrieve the weather info for next week*/
-
+                        /* iterates through the next 7 days to retrieve the weather info for next week */
                         let forecastWeek = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&units=M&key=${apiKey}`
+
                         fetch(forecastWeek)
                             .then(response => {
                                 return response.json()
@@ -68,8 +69,17 @@ function getLocation() {
                             .then(data => {
                                 console.log(data)
 
+                                /* retrieves the icons information and populate the DOM */
+                                for (let i = 1; i <= days.length; i++) {
+                                    for (let i = 0; i < iconForecastWeekQuerySelector.length; i++) {
+                                        let imgCode = data.data[i].weather.icon;
+                                        iconForecastWeekQuerySelector[i].src = `https://www.weatherbit.io/static/img/icons/${imgCode}.png`
+                                    }
+                                }
+
+                                /* retrieves the forecast information for the next week */
                                 for (let i = 1; i <= nrDaysToIterate; i++) {
-                                    temp.push(Math.floor(data.data[i].temp));
+                                    temp.push(Math.round(data.data[i].temp));
                                 }
 
                                 for (let i = 0; i < days.length; i++) {
@@ -77,14 +87,11 @@ function getLocation() {
                                         tempForecastWeekQuerySelector[i].textContent = temp[i] + "ºC";
                                     }
                                 }
-
                             })
-
                     })
             })
         } else {
             console.log("Location not available.")
         }
     })
-
 };
