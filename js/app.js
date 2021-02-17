@@ -1,3 +1,5 @@
+const apiKey = "c9844fc7cf52401cb9ca1af55ae1194a"
+
 let latitude;
 let longitude;
 
@@ -7,6 +9,7 @@ let weatherDescriptionQuerySelector = document.querySelector('#center-icon-temp-
 let weatherRealTempQuerySelector = document.querySelector('#right-real-temperature > h1')
 let feelsLikeTempQuerySelector = document.querySelector('#right-real-temperature > p')
 let dayOfWeekQuerySelector = document.querySelectorAll('#weekdays > div > h1')
+let tempForecastWeekQuerySelector = document.querySelectorAll('#weekdays > div > p')
 
 getLocation();
 
@@ -15,11 +18,11 @@ function getLocation() {
     window.addEventListener('load', () => {
 
         if (navigator.geolocation) {
+
             navigator.geolocation.getCurrentPosition(position => {
                 latitude = position.coords.latitude;
                 longitude = position.coords.longitude;
 
-                const apiKey = "c9844fc7cf52401cb9ca1af55ae1194a"
                 const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${apiKey}`
 
                 fetch(url)
@@ -39,40 +42,49 @@ function getLocation() {
                         weatherRealTempQuerySelector.textContent = Math.floor(realTemp) + "ºC";
                         feelsLikeTempQuerySelector.textContent = "Feels like " + Math.floor(feelsLike) + "ºC";
 
-                        const urlSevenDays = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&units=M&key=${apiKey}`
-                        fetch(urlSevenDays)
+                        /* iterates through the next 7 days, using moment.js lib*/
+
+                        let days = [];
+                        let temp = [];
+                        let nrDaysToIterate = 7;
+
+                        for (let i = 1; i <= nrDaysToIterate; i++) {
+                            days.push(moment().add(i, 'days').format('ddd'));
+                        }
+
+                        for (let i = 0; i < days.length; i++) {
+                            for (let i = 0; i < dayOfWeekQuerySelector.length; i++) {
+                                dayOfWeekQuerySelector[i].textContent = days[i];
+                            }
+                        }
+
+                        /* iterates through the next 7 days to retrieve the weather info for next week*/
+
+                        let forecastWeek = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&units=M&key=${apiKey}`
+                        fetch(forecastWeek)
                             .then(response => {
                                 return response.json()
                             })
                             .then(data => {
-                                //console.log(data)
+                                console.log(data)
+
+                                for (let i = 1; i <= nrDaysToIterate; i++) {
+                                    temp.push(Math.floor(data.data[i].temp));
+                                }
+
+                                for (let i = 0; i < days.length; i++) {
+                                    for (let i = 0; i < tempForecastWeekQuerySelector.length; i++) {
+                                        tempForecastWeekQuerySelector[i].textContent = temp[i] + "ºC";
+                                    }
+                                }
+
                             })
+
                     })
             })
-            iterateForecast();
         } else {
             console.log("Location not available.")
         }
     })
 
 };
-
-function iterateForecast() {
-    var days = new Array();
-    days[0] = "SUN";
-    days[1] = "MON";
-    days[2] = "TUE";
-    days[3] = "WED";
-    days[4] = "THU";
-    days[5] = "FRI";
-    days[6] = "SAT";
-
-    for (let i = 0; i < days.length; i++) {
-        for (let i = 0; i < dayOfWeekQuerySelector.length; i++) {
-            dayOfWeekQuerySelector[i].textContent = days[i];
-        }
-    }
-
-    
-
-}
