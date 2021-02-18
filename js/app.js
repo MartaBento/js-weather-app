@@ -1,5 +1,4 @@
 const apiKeyWeatherBit = "c9844fc7cf52401cb9ca1af55ae1194a"
-const apiKeyGCP = "AIzaSyBoz8ldUL7PCjKjS1o9B_SDejzsuHmfuC0"
 
 let latitude;
 let longitude;
