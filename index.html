@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/dark-mode.css">
     <link rel="stylesheet" href="./css/button-style.css">
     <link rel="shortcut icon" href="#">
     <title>JavaScript Weather App</title>
@@ -13,12 +12,13 @@
 
 <body>
 
-    <div class="button-toggle">
     <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-      </label>
-    </div>
+        <input type="checkbox" id="toggleButton">
+        <div onclick="toggleDarkMode()" class="slider round">
+            <span class="on">Dark</span>
+            <span class="off">Light</span>
+        </div>
+    </label>
 
     <div id="container-top">
         <div id="left-today-description">
@@ -38,7 +38,7 @@
     </div>
 
     <div id="container-bottom">
-        <div id="forecast-intro">
+        <div>
             <h1>Forecast preview for the next 7 days</h1>
         </div>
         <div id="weekdays">
@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="./js/app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
 </body>
