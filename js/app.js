@@ -9,11 +9,15 @@ let weatherDescriptionQuerySelector = document.querySelector('#center-icon-temp-
 let weatherRealTempQuerySelector = document.querySelector('#right-real-temperature > h1')
 let feelsLikeTempQuerySelector = document.querySelector('#right-real-temperature > p')
 let dayOfWeekQuerySelector = document.querySelectorAll('#weekdays > div > h1')
+let dayForecastQuerySelector = document.querySelectorAll('#weekdays > div > h2')
+let descriptionForecastQuerySelector = document.querySelectorAll('#weekdays > div > h3')
 let tempForecastWeekQuerySelector = document.querySelectorAll('#weekdays > div > p')
 let iconForecastWeekQuerySelector = document.querySelectorAll('#icon')
 
-let days = [];
+let weekDays = [];
+let calendarDays = [];
 let temp = [];
+let description = [];
 let nrDaysToIterate = 7;
 
 getLocation();
@@ -50,12 +54,14 @@ function getLocation() {
                         /* iterates through the next 7 days, using moment.js lib */
 
                         for (let i = 1; i <= nrDaysToIterate; i++) {
-                            days.push(moment().add(i, 'days').format('dddd'));
+                            weekDays.push(moment().add(i, 'days').format('dddd'));
+                            calendarDays.push(moment().add(i, 'days').format('D/MM'));
                         }
 
-                        for (let i = 0; i < days.length; i++) {
+                        for (let i = 0; i < weekDays.length; i++) {
                             for (let i = 0; i < dayOfWeekQuerySelector.length; i++) {
-                                dayOfWeekQuerySelector[i].textContent = days[i];
+                                dayOfWeekQuerySelector[i].textContent = weekDays[i];
+                                dayForecastQuerySelector[i].textContent = calendarDays[i];
                             }
                         }
 
@@ -67,10 +73,10 @@ function getLocation() {
                                 return response.json()
                             })
                             .then(data => {
-                                console.log(data)
+                                //console.log(data)
 
                                 /* retrieves the icons information and populate the DOM */
-                                for (let i = 1; i <= days.length; i++) {
+                                for (let i = 1; i <= weekDays.length; i++) {
                                     for (let i = 0; i < iconForecastWeekQuerySelector.length; i++) {
                                         let imgCode = data.data[i].weather.icon;
                                         iconForecastWeekQuerySelector[i].src = `https://www.weatherbit.io/static/img/icons/${imgCode}.png`
@@ -79,12 +85,14 @@ function getLocation() {
 
                                 /* retrieves the forecast information for the next week */
                                 for (let i = 1; i <= nrDaysToIterate; i++) {
-                                    temp.push(Math.round(data.data[i].temp));
+                                    temp.push(Math.round(data.data[i].low_temp) + "/" + Math.round(data.data[i].high_temp));
+                                    description.push(data.data[i].weather.description);
                                 }
 
-                                for (let i = 0; i < days.length; i++) {
+                                for (let i = 0; i < weekDays.length; i++) {
                                     for (let i = 0; i < tempForecastWeekQuerySelector.length; i++) {
                                         tempForecastWeekQuerySelector[i].textContent = temp[i] + "ºC";
+                                        descriptionForecastQuerySelector[i].textContent = description[i];
                                     }
                                 }
                             })

@@ -4,12 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/common-styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/dark-mode.css">
+    <link rel="stylesheet" href="./css/button-style.css">
     <link rel="shortcut icon" href="#">
     <title>JavaScript Weather App</title>
 </head>
 
 <body>
+
+    <div class="button-toggle">
+    <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
     <div id="container-top">
         <div id="left-today-description">
             <h1>Monday 15</h1>
@@ -29,42 +39,56 @@
 
     <div id="container-bottom">
         <div id="forecast-intro">
-            <h1>Forecast preview for the next 7 days:</h1>
+            <h1>Forecast preview for the next 7 days</h1>
         </div>
         <div id="weekdays">
             <div>
                 <h1>Mon</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>16ºC</p>
             </div>
             <div>
                 <h1>Tue</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>0ºC</p>
             </div>
             <div>
                 <h1>Wed</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>2ºC</p>
             </div>
             <div>
                 <h1>Thu</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>7ºC</p>
             </div>
             <div>
                 <h1>Fri</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>10ºC</p>
             </div>
             <div>
                 <h1>Sat</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>5ºC</p>
             </div>
             <div>
                 <h1>Sun</h1>
+                <h2>Day</h2>
                 <img id="icon"></img>
+                <h3>Description</h3>
                 <p>1ºC</p>
             </div>
         </div>
