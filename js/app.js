@@ -1,13 +1,14 @@
-const apiKey = "c9844fc7cf52401cb9ca1af55ae1194a"
+const apiKeyWeatherBit = "c9844fc7cf52401cb9ca1af55ae1194a"
+const apiKeyGCP = "AIzaSyBoz8ldUL7PCjKjS1o9B_SDejzsuHmfuC0"
 
 let latitude;
 let longitude;
 
-let cityDescriptionQuerySelector = document.querySelector('#left-today-description > p')
-let dateDescriptionQuerySelector = document.querySelector('#left-today-description > h1')
-let weatherDescriptionQuerySelector = document.querySelector('#center-icon-temp-description > p')
-let weatherRealTempQuerySelector = document.querySelector('#right-real-temperature > h1')
-let feelsLikeTempQuerySelector = document.querySelector('#right-real-temperature > p')
+let cityDescriptionQuerySelector = document.querySelector('#today-in')
+let dateDescriptionQuerySelector = document.querySelector('#date')
+let weatherDescriptionQuerySelector = document.querySelector('#tempDescription')
+let weatherRealTempQuerySelector = document.querySelector('#temp')
+let feelsLikeTempQuerySelector = document.querySelector('#feels-like')
 let dayOfWeekQuerySelector = document.querySelectorAll('#weekdays > div > h1')
 let dayForecastQuerySelector = document.querySelectorAll('#weekdays > div > h2')
 let descriptionForecastQuerySelector = document.querySelectorAll('#weekdays > div > h3')
@@ -18,7 +19,7 @@ let weekDays = [];
 let calendarDays = [];
 let temp = [];
 let description = [];
-let nrDaysToIterate = 7;
+let nrDaysToIterate = 5;
 
 getLocation();
 
@@ -32,7 +33,7 @@ function getLocation() {
                 latitude = position.coords.latitude;
                 longitude = position.coords.longitude;
 
-                const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${apiKey}`
+                const url = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${apiKeyWeatherBit}`
 
                 fetch(url)
                     .then(response => {
@@ -45,7 +46,7 @@ function getLocation() {
                         let realTemp = data.data[0].temp;
                         let feelsLike = data.data[0].app_temp;
 
-                        dateDescriptionQuerySelector.textContent = moment().format('dddd' + ', ' + 'DD')
+                        dateDescriptionQuerySelector.textContent = moment().format('dddd' + ', ' + 'DD' + ', ' + 'HH:mm')
                         cityDescriptionQuerySelector.textContent = "Today in " + cityName + ", " + countryCode;
                         weatherDescriptionQuerySelector.textContent = data.data[0].weather.description;
                         weatherRealTempQuerySelector.textContent = Math.round(realTemp) + "ºC";
@@ -66,7 +67,7 @@ function getLocation() {
                         }
 
                         /* iterates through the next 7 days to retrieve the weather info for next week */
-                        let forecastWeek = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&units=M&key=${apiKey}`
+                        let forecastWeek = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&units=M&key=${apiKeyWeatherBit}`
 
                         fetch(forecastWeek)
                             .then(response => {
